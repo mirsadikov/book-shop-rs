@@ -1,0 +1,86 @@
+* {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.main .container {
+  display: flex;
+  gap: 2rem;
+}
+
+.books {
+  flex: 2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.books .book {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  justify-items: start;
+  grid-template-rows: repeat(5 1fr);
+  position: relative;
+}
+
+.books .book .book__img {
+  width: 100%;
+  grid-row: span 5;
+}
+
+.books .book__desc {
+  position: absolute;
+  width: 20rem;
+  height: auto;
+  border: 1px solid #000;
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.book--show-more .book__desc {
+  visibility: visible;
+  opacity: 1;
+}
+
+.cart {
+  flex: 1;
+  background-color: cyan;
+}
+
+.cart__items {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.cart__item {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: repeat(3, min-content);
+}
+
+.cart__item .cart__item-img {
+  height: 10rem;
+  grid-row: span 4;
+}
