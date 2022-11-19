@@ -40,6 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.classList.contains('book__show-more')) {
       const bookEl = e.target.closest('.book');
       bookEl.classList.toggle('book--show-more');
+
+      if (bookEl.classList.contains('book--show-more')) {
+        e.target.textContent = 'Hide';
+      } else {
+        e.target.textContent = 'Show more';
+      }
+    }
+  });
+
+  booksEl.addEventListener('dragstart', (e) => {
+    if (e.target.classList.contains('book__img')) {
+      e.dataTransfer.setData(
+        'text/plain',
+        e.target.closest('.book').dataset.id,
+      );
     }
   });
 
@@ -47,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
   cartEl.classList.add('cart');
   mainContainer.insertAdjacentElement('beforeend', cartEl);
   const cartContent = `<h2>Cart</h2>
-  <div class="cart__items"></div>`;
+  <div class="cart__items"></div>
+  <h3 class="cart__total"></h3>`;
   cartEl.insertAdjacentHTML('beforeend', cartContent);
   cart = JSON.parse(localStorage.getItem('cart')) || [];
   renderCart(cart);
@@ -57,6 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const cartItemId = cartItemEl.dataset.id;
       removeBookFromCart(cartItemId, cart);
     }
+  });
+
+  cartEl.addEventListener('dragover', (e) => {
+    e.preventDefault();
+  });
+
+  cartEl.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const bookId = e.dataTransfer.getData('text/plain');
+    const bookObj = books.find((book) => book.id == bookId);
+    addBookToCart(bookObj, cart);
   });
 
   // FOOTER
@@ -78,12 +105,13 @@ function renderCart(cart) {
       <img class="cart__item-img" src="/img/${book.imageLink}" alt="${book.title}" />
       <h3>${book.title}</h3>
       <p>${book.price}</p>
-      <p>Quantity: ${book.quantity}</p>
       <button class="cart__item-remove">Remove</button>
       </div>`;
     })
     .join('');
   cartEl.querySelector('.cart__items').innerHTML = cartContent;
+  const total = cart.reduce((acc, book) => acc + book.price, 0).toFixed(2);
+  cartEl.querySelector('.cart__total').innerHTML = `Total: $${total}`;
 }
 
 function renderBooks(books) {
@@ -91,7 +119,7 @@ function renderBooks(books) {
     ${books
       .map((book) => {
         return `<div class="book" data-id="${book.id}">
-        <img class="book__img" src="/img/${book.imageLink}" alt="${book.title}" />
+        <img class="book__img" src="/img/${book.imageLink}" alt="${book.title}" draggable="true"/>
         <h2>${book.title}</h2>
         <p>${book.author}</p>
         <p class="book__desc">${book.description}</p>
@@ -106,10 +134,8 @@ function renderBooks(books) {
 
 function addBookToCart(book, cart) {
   const bookInCart = cart.find((item) => item.id === book.id);
-  if (bookInCart) {
-    bookInCart.quantity++;
-  } else {
-    cart.push({ ...book, quantity: 1 });
+  if (!bookInCart) {
+    cart.push(book);
   }
 
   localStorage.setItem('cart', JSON.stringify(cart));

@@ -82,5 +82,5 @@ html {
 
 .cart__item .cart__item-img {
   height: 10rem;
-  grid-row: span 4;
+  grid-row: span 3;
 }
