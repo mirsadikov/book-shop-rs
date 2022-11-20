@@ -1,0 +1,249 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  font-family: 'PT Serif', serif;
+  background-color: #f7e2da;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: #5e3f2c;
+  text-align: center;
+}
+
+.header h1 {
+  color: #fff;
+  margin: 0;
+  padding: 1rem;
+}
+
+.header .hero {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(/img/herobg.jpeg);
+  background-size: cover;
+  height: 40rem;
+  background-position: center 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header .hero p {
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  font-size: 4.2rem;
+  padding: 1rem;
+}
+
+/* MAIN */
+
+.main .container {
+  display: flex;
+  gap: 2rem;
+}
+
+.books {
+  flex: 2;
+  padding: 3rem;
+}
+
+.books h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.books__list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.books .book {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  justify-items: start;
+  grid-template-rows: repeat(4, auto);
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  gap: 1rem 3rem;
+  background-color: #fff;
+  border: 1px solid #b9b9b9;
+  padding: 1rem;
+  font-size: 1.6rem;
+  align-items: center;
+}
+
+.books .book .book__img {
+  width: 100%;
+  grid-row: span 4;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
+
+.books .book h3 {
+  font-size: 2.2rem;
+}
+
+.book--show-more .book__show-more {
+  z-index: 2;
+  position: absolute;
+}
+
+.books .book__desc {
+  grid-column: 2 / -1;
+  position: absolute;
+  width: 20rem;
+  height: calc(100%);
+  width: 100%;
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  top: 0;
+  z-index: 1;
+  padding: 1rem 1rem 4rem;
+}
+
+.book--show-more .book__desc {
+  visibility: visible;
+  opacity: 1;
+}
+
+.books .book__btns button {
+  background-color: #fff;
+  border: 1px solid #b9b9b9;
+  padding: 0.7rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.books .book__btns button:hover {
+  background-color: #b9b9b9;
+}
+
+.books .book__btns button:active {
+  transform: scale(0.95);
+}
+
+.cart {
+  flex: 1;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart h2 {
+  font-size: 3rem;
+}
+
+.cart__items {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.cart__item {
+  padding: 1.5rem 2.5rem 1.5rem 1.5rem;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: repeat(3, min-content);
+  position: relative;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.cart__item-price {
+  font-size: 1.6rem;
+}
+
+.cart__item .cart__item-img {
+  width: 7rem;
+  grid-row: span 3;
+}
+
+.cart__item .cart__item-btn {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid #b9b9b9;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 2rem ;
+  cursor: pointer;
+}
+
+.cart__item .cart__item-btn:hover {
+  background-color: #b9b9b9;
+}
+
+.cart__item .cart__item-btn:active {
+  transform: scale(0.95);
+}
+
+.cart__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart__info a {
+  background-color: #fff;
+  border: 1px solid #b9b9b9;
+  padding: 0.7rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cart__info a:hover {
+  background-color: #b9b9b9;
+}
+
+.cart__info a:active {
+  transform: scale(0.95);
+}
+
+.cart__info .cart__total {
+  font-size: 2.2rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 1.6rem;
+  padding: 3rem 0 1rem;
+}

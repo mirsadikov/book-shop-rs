@@ -1,35 +1,38 @@
 const body = document.querySelector('body');
-const headerEl = document.createElement('header');
-const footer = document.createElement('footer');
-const main = document.createElement('main');
-const booksEl = document.createElement('div');
-const cartEl = document.createElement('div');
+const footer = createElement(
+  'footer',
+  'footer',
+  '<p>Book Shop | zeyds  &copy;</p>',
+);
+const main = createElement('main', 'main');
+const booksEl = createElement('div', 'books');
+const booksList = createElement('div', 'books__list');
+const cartEl = createElement('div', 'cart');
 let books = [];
 let cart = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   // HEADER
+
+  const headerContent = `
+<a href="/"><h1> Book Shop </h1></a>
+<div class="hero">
+<p>Weclome to the Book Shop!</p>
+</div>`;
+  const headerEl = createElement('header', 'header', headerContent);
   body.appendChild(headerEl);
-  const headerContent = `<div class="container">
-  <a href="/"><h1> Book Shop </h1></a>
-  <div class="hero">
-  <p>Weclome to the Book Shop!</p>
-  </div>
-  </div>`;
-  headerEl.classList.add('header');
-  headerEl.insertAdjacentHTML('beforeend', headerContent);
 
   // MAIN
   body.appendChild(main);
-  main.classList.add('main');
-  const mainContainer = document.createElement('div');
-  mainContainer.classList.add('container');
+  const mainContainer = createElement('div', 'container');
   main.insertAdjacentElement('beforeend', mainContainer);
 
   // BOOKS
-  booksEl.classList.add('books');
   mainContainer.appendChild(booksEl);
-  booksEl.addEventListener('click', (e) => {
+  booksEl.insertAdjacentHTML('afterbegin', '<h2>Books Catalog</h2>');
+  booksEl.insertAdjacentElement('beforeend', booksList);
+
+  booksList.addEventListener('click', (e) => {
     if (e.target.classList.contains('book__add-cart')) {
       const bookEl = e.target.closest('.book');
       const bookId = bookEl.dataset.id;
@@ -59,16 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // CART
-  cartEl.classList.add('cart');
   mainContainer.insertAdjacentElement('beforeend', cartEl);
   const cartContent = `<h2>Cart</h2>
   <div class="cart__items"></div>
-  <h3 class="cart__total"></h3>`;
+  <div class="cart__info">
+  <h3 class="cart__total"></h3>
+  <a href="/order.html" class="cart__confirm">Confirm cart</a>
+  </div>`;
   cartEl.insertAdjacentHTML('beforeend', cartContent);
   cart = JSON.parse(localStorage.getItem('cart')) || [];
   renderCart(cart);
   document.querySelector('.cart__items').addEventListener('click', (e) => {
     if (e.target.classList.contains('cart__item-remove')) {
+      console.log('remove');
       const cartItemEl = e.target.closest('.cart__item');
       const cartItemId = cartItemEl.dataset.id;
       removeBookFromCart(cartItemId, cart);
@@ -87,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // FOOTER
-  footer.classList.add('footer');
   body.appendChild(footer);
 });
 
@@ -102,10 +107,13 @@ function renderCart(cart) {
   const cartContent = cart
     .map((book) => {
       return `<div class="cart__item" data-id="${book.id}">
-      <img class="cart__item-img" src="/img/${book.imageLink}" alt="${book.title}" />
+      <img class="cart__item-img" src="/img/${book.imageLink}" alt="${
+        book.title
+      }" />
       <h3>${book.title}</h3>
-      <p>${book.price}</p>
-      <button class="cart__item-remove">Remove</button>
+      <p class="cart__item-price">$${book.price.toFixed(2)}</p>
+      <p>${book.author}</p>
+      <button class="cart__item-remove cart__item-btn"><i class="ai-cross cart__item-remove"></i></button>
       </div>`;
     })
     .join('');
@@ -119,17 +127,21 @@ function renderBooks(books) {
     ${books
       .map((book) => {
         return `<div class="book" data-id="${book.id}">
-        <img class="book__img" src="/img/${book.imageLink}" alt="${book.title}" draggable="true"/>
-        <h2>${book.title}</h2>
-        <p>${book.author}</p>
+        <img class="book__img" src="/img/${book.imageLink}" alt="${
+          book.title
+        }" draggable="true"/>
+        <h3>${book.title}</h3>
+        <p><b>Author:</b> ${book.author}</p>
+        <p><b>Price:</b> $${book.price.toFixed(2)}</p>
         <p class="book__desc">${book.description}</p>
+        <div class="book__btns">
         <button class="book__show-more">Show more</button>
-        <p>${book.price}</p>
         <button class="book__add-cart">Add to cart</button>
+        </div>
         </div>`;
       })
       .join('')}`;
-  booksEl.insertAdjacentHTML('afterbegin', booksContent);
+  booksList.insertAdjacentHTML('afterbegin', booksContent);
 }
 
 function addBookToCart(book, cart) {
@@ -147,4 +159,11 @@ function removeBookFromCart(id, cart) {
   cart.splice(bookIndex, 1);
   localStorage.setItem('cart', JSON.stringify(cart));
   renderCart(cart);
+}
+
+function createElement(tag, className, content) {
+  const element = document.createElement(tag);
+  element.classList.add(className);
+  element.innerHTML = content || '';
+  return element;
 }
