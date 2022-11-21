@@ -10,6 +10,7 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   font-family: 'PT Serif', serif;
+  background-color: #f7e2da;
 }
 
 a {
@@ -18,7 +19,7 @@ a {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -55,4 +56,89 @@ a {
 .form {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.6rem;
 }
+
+.form input {
+  padding: 1rem;
+  font-size: 1.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-family: 'PT Serif', serif;
+  margin-bottom: 1rem;
+}
+
+.form__button {
+  background-color: #5e3f2c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.form__address {
+  gap: 1rem;
+  display: flex;  
+}
+
+.form__payments  {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+}
+
+.form__button:disabled {
+  background-color: #a48673;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form .form__input--invalid {
+  border: 1px solid red;
+}
+
+.form__error {
+  color: red;
+  font-size: 1.4rem;
+}
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.modal__content p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.modal__content button {
+  background-color: #5e3f2c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.modal__content button:hover {
+  background-color: #a48673;
+}
+

@@ -80,6 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
       removeBookFromCart(cartItemId, cart);
     }
   });
+  document.querySelector('.cart__confirm').addEventListener('click', (e) => {
+    if (cart.length === 0) {
+      e.preventDefault();
+      alert('Your cart is empty');
+    }
+  });
 
   cartEl.addEventListener('dragover', (e) => {
     e.preventDefault();
