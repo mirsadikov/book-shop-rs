@@ -27,6 +27,24 @@ const formContent = `
 <label class="form__label" for="paymentCard">Card</label>
 </div>
 </div>
+<div class="gifts">
+<div class="gift">
+<input type="checkbox" name="gift" value="gift1" id="gift1">
+<label class="form__label" for="gift1">Pack as gift</label>
+</div>
+<div class="gift">
+<input type="checkbox" name="gift" value="gift2" id="gift2">
+<label class="form__label" for="gift2">Add postcard</label>
+</div>
+<div class="gift">
+<input type="checkbox" name="gift" value="gift3" id="gift3">
+<label class="form__label" for="gift3">2% discount to the next time</label>
+</div>
+<div class="gift">
+<input type="checkbox" name="gift" value="gift4" id="gift4">
+<label class="form__label" for="gift4">Branded pen or pencil</label>
+</div>
+</div>
 <input class="form__button" type="submit" disabled value="Order">`;
 
 const body = document.querySelector('body');
@@ -123,6 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  let checks = document.querySelectorAll("input[type='checkbox']");
+  var max = 2;
+  for (var i = 0; i < checks.length; i++)
+    checks[i].onclick = selectiveCheck;
+  function selectiveCheck (event) {
+    var checkedChecks = document.querySelectorAll("input[type='checkbox']:checked");
+    if (checkedChecks.length >= max + 1)
+      return false;
+  }
 
   // FOOTER
   body.appendChild(footer);
