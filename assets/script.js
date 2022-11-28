@@ -110,44 +110,48 @@ fetch('../books.json')
   });
 
 function renderCart(cart) {
-  const cartContent = cart
-    .map((book) => {
-      return `<div class="cart__item" data-id="${book.id}">
+  const cartFragment = document.createDocumentFragment();
+  cart.forEach((book) => {
+    const cartItem = createElement('div', 'cart__item');
+    cartItem.dataset.id = book.id;
+    const cartItemContent = `
       <img class="cart__item-img" src="/img/${book.imageLink}" alt="${
         book.title
       }" />
       <h3>${book.title}</h3>
       <p class="cart__item-price">$${book.price.toFixed(2)}</p>
       <p>${book.author}</p>
-      <button class="cart__item-remove cart__item-btn"><i class="ai-cross cart__item-remove"></i></button>
-      </div>`;
+      <button class="cart__item-remove cart__item-btn"><i class="ai-cross cart__item-remove"></i></button>`;
+    cartItem.insertAdjacentHTML('beforeend', cartItemContent);
+      cartFragment.appendChild(cartItem);
     })
-    .join('');
-  cartEl.querySelector('.cart__items').innerHTML = cartContent;
+
+  cartEl.querySelector('.cart__items').appendChild(cartFragment);
   const total = cart.reduce((acc, book) => acc + book.price, 0).toFixed(2);
   cartEl.querySelector('.cart__total').innerHTML = `Total: $${total}`;
 }
 
 function renderBooks(books) {
-  const booksContent = `
-    ${books
-      .map((book) => {
-        return `<div class="book" data-id="${book.id}">
-        <img class="book__img" src="/img/${book.imageLink}" alt="${
-          book.title
-        }" draggable="true"/>
-        <h3>${book.title}</h3>
-        <p><b>Author:</b> ${book.author}</p>
-        <p><b>Price:</b> $${book.price.toFixed(2)}</p>
-        <p class="book__desc">${book.description}</p>
-        <div class="book__btns">
-        <button class="book__show-more">Show more</button>
-        <button class="book__add-cart">Add to cart</button>
-        </div>
-        </div>`;
-      })
-      .join('')}`;
-  booksList.insertAdjacentHTML('afterbegin', booksContent);
+  const booksFragment = document.createDocumentFragment();
+  books.forEach((book) => {
+    const bookEl = createElement('div', 'book');
+    bookEl.setAttribute('draggable', true);
+    bookEl.dataset.id = book.id;
+    bookEl.innerHTML = `
+    <img class="book__img" src="/img/${book.imageLink}" alt="${
+      book.title
+    }" draggable="true"/>
+    <h3>${book.title}</h3>
+    <p><b>Author:</b> ${book.author}</p>
+    <p><b>Price:</b> $${book.price.toFixed(2)}</p>
+    <p class="book__desc">${book.description}</p>
+    <div class="book__btns">
+    <button class="book__show-more">Show more</button>
+    <button class="book__add-cart">Add to cart</button>
+    </div>`
+    booksFragment.appendChild(bookEl);
+  })
+  booksList.appendChild(booksFragment);
 }
 
 function addBookToCart(book, cart) {

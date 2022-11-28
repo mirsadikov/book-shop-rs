@@ -135,7 +135,9 @@ fetch('../books.json')
   });
 
 function createElement(tag, className, content, attr) {
+  const fragment = new DocumentFragment(tag);
   const element = document.createElement(tag);
+  console.log(element)
   element.classList.add(className);
   element.innerHTML = content || '';
   if (attr) {
@@ -143,7 +145,7 @@ function createElement(tag, className, content, attr) {
       element.setAttribute(item.name, item.value);
     });
   }
-  return element;
+  return fragment.appendChild(element);
 }
 
 function checkValidity(input) {
