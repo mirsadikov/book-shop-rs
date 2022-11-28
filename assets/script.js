@@ -116,17 +116,18 @@ function renderCart(cart) {
     cartItem.dataset.id = book.id;
     const cartItemContent = `
       <img class="cart__item-img" src="/img/${book.imageLink}" alt="${
-        book.title
-      }" />
+      book.title
+    }" />
       <h3>${book.title}</h3>
       <p class="cart__item-price">$${book.price.toFixed(2)}</p>
       <p>${book.author}</p>
       <button class="cart__item-remove cart__item-btn"><i class="ai-cross cart__item-remove"></i></button>`;
     cartItem.insertAdjacentHTML('beforeend', cartItemContent);
-      cartFragment.appendChild(cartItem);
-    })
+    cartFragment.appendChild(cartItem);
+  });
 
-  cartEl.querySelector('.cart__items').appendChild(cartFragment);
+  cartEl.querySelector('.cart__items').innerHTML = '';
+  cartEl.querySelector('.cart__items').appendChild(cartFragment); 
   const total = cart.reduce((acc, book) => acc + book.price, 0).toFixed(2);
   cartEl.querySelector('.cart__total').innerHTML = `Total: $${total}`;
 }
@@ -135,7 +136,6 @@ function renderBooks(books) {
   const booksFragment = document.createDocumentFragment();
   books.forEach((book) => {
     const bookEl = createElement('div', 'book');
-    bookEl.setAttribute('draggable', true);
     bookEl.dataset.id = book.id;
     bookEl.innerHTML = `
     <img class="book__img" src="/img/${book.imageLink}" alt="${
@@ -148,9 +148,9 @@ function renderBooks(books) {
     <div class="book__btns">
     <button class="book__show-more">Show more</button>
     <button class="book__add-cart">Add to cart</button>
-    </div>`
+    </div>`;
     booksFragment.appendChild(bookEl);
-  })
+  });
   booksList.appendChild(booksFragment);
 }
 
